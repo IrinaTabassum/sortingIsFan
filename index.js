@@ -80,11 +80,14 @@ slider.addEventListener("input", function () {
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
-
+  
+  let p=0;
+  let k = 0;
+  
   async function bubbleSort(array) {
     let bars = document.getElementsByClassName("bar");
-    for (let i = 0; i < array.length; i++) {
-      for (let j = 0; j < array.length - i - 1; j++) {
+    for (let i=p; i < array.length; i++) {
+      for (let j=k; j < array.length - i - 1; j++) {
         bars[j].style.backgroundColor = "yellow";
         if (array[j] > array[j + 1]) {
           for (let k = 0; k < bars.length; k++) {
@@ -101,6 +104,12 @@ slider.addEventListener("input", function () {
           bars[j + 1].style.height = array[j + 1] * heightFactor + "px";
           bars[j + 1].style.backgroundColor = "red";
           // bars[j + 1].innerText = array[j + 1];
+          
+          if(stop){
+            p=i;
+            k=j;
+          }
+          else k=0;
           if(stop) break;
           await sleep(speedFactor);
         }
@@ -108,8 +117,7 @@ slider.addEventListener("input", function () {
         await sleep(speedFactor);
       }
       await sleep(speedFactor);
-      if(!stop)
-      bars[array.length - i-1].style.backgroundColor = "green";
+      if(!stop) bars[array.length - i-1].style.backgroundColor = "green";
     }
     return array;
   }
@@ -117,6 +125,9 @@ slider.addEventListener("input", function () {
   stop_btn.addEventListener("click",function(){
     stop = true;
   })
+  // pose_btn.addEventListener("click",function(){
+  //   stop = true;
+  // })
   sort_btn.addEventListener("click", function () {
     stop = false;
     bubbleSort(unsorted_array);

@@ -11,7 +11,7 @@ let minRange = 1;
 let maxRange = slider.value;
 let numOfBars = slider.value;
 let heightFactor = 5;
-let speedFactor = 100;
+let speedFactor = 10;
 let unsorted_array = new Array(numOfBars);
 let stop = false;
 
@@ -81,13 +81,13 @@ slider.addEventListener("input", function () {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
   
-  let p=0;
-  let k = 0;
+  let p = 0;
+  let q = 0;
   
   async function bubbleSort(array) {
     let bars = document.getElementsByClassName("bar");
     for (let i=p; i < array.length; i++) {
-      for (let j=k; j < array.length - i - 1; j++) {
+      for (let j=q; j < array.length - i - 1; j++) {
         bars[j].style.backgroundColor = "yellow";
         if (array[j] > array[j + 1]) {
           for (let k = 0; k < bars.length; k++) {
@@ -104,12 +104,11 @@ slider.addEventListener("input", function () {
           bars[j + 1].style.height = array[j + 1] * heightFactor + "px";
           bars[j + 1].style.backgroundColor = "red";
           // bars[j + 1].innerText = array[j + 1];
-          
+          p=i;
           if(stop){
-            p=i;
-            k=j;
+            q=j;
           }
-          else k=0;
+          else q=0;
           if(stop) break;
           await sleep(speedFactor);
         }
